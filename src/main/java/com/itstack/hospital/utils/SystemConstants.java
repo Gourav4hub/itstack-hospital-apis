@@ -9,7 +9,7 @@ public interface SystemConstants
 	};
 	
 	String SPECIALIZATION[] = {
-			
+			"Neurologist" , "Oncologist" , "Cardiologist" , "Dermologoist" , "Surgeon"
 	};
 	
 	String TEST_TYPES[] = {

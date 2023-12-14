@@ -34,4 +34,14 @@ public class User
 	
 	@Column(name = "active_status",nullable = false)
 	private Boolean activeStatus;
+
+	public User(String email, String password, String role, Boolean activeStatus) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.activeStatus = activeStatus;
+	}
+	
+	
 }
