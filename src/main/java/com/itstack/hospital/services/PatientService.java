@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itstack.hospital.entities.Patient;
@@ -22,13 +23,16 @@ public class PatientService
 	private PatientRepo patientRepo;
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	//@Transactional(value = TxType.REQUIRES_NEW)
 	public ApiResponse savePatient(PatientRegModel patientModel) 
 	{
 		ApiResponse response = null;
 		try {
-			User user = userService.saveUser(patientModel.getEmail(),patientModel.getPassword());
+			User user = userService.saveUser(patientModel.getEmail(),passwordEncoder.encode(patientModel.getPassword()),"ROLE_PATIENT");
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dob = sdf.parse(patientModel.getDob());
