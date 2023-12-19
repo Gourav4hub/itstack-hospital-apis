@@ -2,6 +2,8 @@ package com.itstack.hospital.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +46,7 @@ public class Patient
 	
 	@ManyToOne
 	@JoinColumn(name = "user")
+	@JsonIgnore
 	private User user;
 
 	public Patient(String name, String phone, String address, Date dob, String gender, User user) {

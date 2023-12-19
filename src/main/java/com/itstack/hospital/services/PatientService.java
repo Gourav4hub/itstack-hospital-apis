@@ -47,4 +47,9 @@ public class PatientService
 		}		
 		return response;
 	}
+	
+	public Patient getPatientByUserId(User user) 
+	{
+		return patientRepo.findByUser(user).get();
+	}
 }

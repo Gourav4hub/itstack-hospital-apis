@@ -48,11 +48,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	{		
 		Gson gson = new Gson();
 		response.setHeader("Content-Type", "application/json");
+		
 		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String userid = null;
 		String jwtToken = null;
 		System.out.println("Token Filter Run .... " + requestTokenHeader);
+		
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) 
 		{
 			jwtToken = requestTokenHeader.substring(7);
@@ -80,6 +82,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.getWriter().write(gson.toJson(new ApiResponse(false, "Token Expired !")));
 			}catch(Exception ex) {
+				ex.printStackTrace();
 				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.getWriter().write(gson.toJson(new ApiResponse(false, "Wrong Token Format !")));
 			}

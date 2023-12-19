@@ -41,13 +41,16 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
+	{
+		
+		
 		http.csrf(t -> t.disable())
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/", "/web/**").permitAll()
-						.requestMatchers("/irecp/**").hasAnyRole("ADMIN","RECP")
-						.requestMatchers("/iadmin/**").hasRole("ADMIN")
+						.requestMatchers("/patient/**").hasRole("PATIENT")
+//						.requestMatchers("/iadmin/**").hasRole("ADMIN")
 						.anyRequest().authenticated())
-				.exceptionHandling(t->t.accessDeniedPage("/user/accessDenied"))
+				.exceptionHandling(t->t.accessDeniedPage("/web/accessDenied"))
 				.formLogin(t->{
 					t.usernameParameter("email");
 					t.passwordParameter("password");
