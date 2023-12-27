@@ -2,6 +2,7 @@ package com.itstack.hospital.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,5 +52,19 @@ public class PatientService
 	public Patient getPatientByUserId(User user) 
 	{
 		return patientRepo.findByUser(user).get();
+	}
+
+	public Patient getById(Integer pid) 
+	{
+		Optional<Patient> op =  patientRepo.findById(pid);
+		if(op.isPresent())
+			return op.get();
+		else
+			return null;
+	}
+
+	public void updatePatient(Patient patient) 
+	{
+		patientRepo.save(patient);		
 	}
 }

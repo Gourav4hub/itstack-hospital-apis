@@ -37,4 +37,13 @@ public class Receptionist
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
+
+	public Receptionist(String name, String phone, Boolean activeStatus, User user) {
+		this.name = name;
+		this.phone = phone;
+		this.activeStatus = activeStatus;
+		this.user = user;
+	}
+	
+	
 }

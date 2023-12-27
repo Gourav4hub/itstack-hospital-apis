@@ -1,8 +1,11 @@
 package com.itstack.hospital.entities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itstack.hospital.model.PatientUpdateModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,5 +62,17 @@ public class Patient
 		this.user = user;
 	}
 	
+	public void updateByModel(PatientUpdateModel model) throws ParseException 
+	{
+		if(model.getName()!=null) this.name = model.getName();
+		if(model.getPhone()!=null) this.phone = model.getPhone();
+		if(model.getAddress()!=null) this.address = model.getAddress();
+		if(model.getDob()!=null) 
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date dob = sdf.parse(model.getDob());
+			this.dob = dob;
+		}
+	}
 	
 }
