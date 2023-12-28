@@ -2,6 +2,7 @@ package com.itstack.hospital.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,9 @@ public class PatientService
 	public void updatePatient(Patient patient) 
 	{
 		patientRepo.save(patient);		
+	}
+
+	public List<Patient> listAll() {
+		return patientRepo.findAll();
 	}
 }

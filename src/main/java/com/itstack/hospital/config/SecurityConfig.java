@@ -48,7 +48,8 @@ public class SecurityConfig {
 		http.csrf(t -> t.disable())
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/", "/web/**").permitAll()
 						.requestMatchers("/patient/**").hasRole("PATIENT")
-//						.requestMatchers("/iadmin/**").hasRole("ADMIN")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+						.requestMatchers("/recep/**").hasAnyRole("ADMIN","RECP")
 						.anyRequest().authenticated())
 				.exceptionHandling(t->t.accessDeniedPage("/web/accessDenied"))
 				.formLogin(t->{

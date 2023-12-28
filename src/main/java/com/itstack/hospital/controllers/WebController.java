@@ -70,6 +70,6 @@ public class WebController
 	@GetMapping("/accessDenied")
 	public ApiResponse accessDenied()
 	{
-		return new ApiResponse(false, "Unauthorized Access !");
+		return new ApiResponse(false, "Unauthorized Access !","Authorization Failed !");
 	}
 }
