@@ -1,5 +1,7 @@
 package com.itstack.hospital.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,9 +37,22 @@ public class Doctor
 	private String specialization;	
 	
 	@Column(name = "active_status",nullable = false)
+	@JsonIgnore
 	private Boolean activeStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "user")
+	@JsonIgnore
 	private User user;
+
+	public Doctor(String name, String phone, String specialization, Boolean activeStatus, User user) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.specialization = specialization;
+		this.activeStatus = activeStatus;
+		this.user = user;
+	}
+	
+	
 }

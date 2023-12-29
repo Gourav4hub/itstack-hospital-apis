@@ -14,6 +14,7 @@ import com.itstack.hospital.entities.User;
 import com.itstack.hospital.model.LoginModel;
 import com.itstack.hospital.model.LoginResponse;
 import com.itstack.hospital.model.PatientRegModel;
+import com.itstack.hospital.services.DocService;
 import com.itstack.hospital.services.PatientService;
 import com.itstack.hospital.services.UserService;
 import com.itstack.hospital.utils.ApiResponse;
@@ -34,6 +35,16 @@ public class WebController
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private DocService docService;
+	
+	
+	@GetMapping("/doctors")
+	public ApiResponse loadDoctors() 
+	{
+		return new ApiResponse(true, "All Doctors Data", docService.listAll());
+	}
 	
 	@PostMapping("/login")
 	public ApiResponse loginUser(@RequestBody LoginModel loginModel) 

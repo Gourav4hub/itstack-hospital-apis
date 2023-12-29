@@ -26,10 +26,20 @@ public class RecpController
 	private PatientService patService;
 	
 	@GetMapping("/list_patient")
-	public ApiResponse getSelfInfo() 
+	public ApiResponse getPatientList() 
 	{
 		List<Patient> list = patService.listAll();
 		
 		return new ApiResponse(true,"Patient Records",list);
+	}
+	
+	@GetMapping("/search_patient/{phone}")
+	public ApiResponse searchPatientByPhone(@PathVariable(name = "phone") String phone) 
+	{
+		Patient ob = patService.getByPhone(phone);
+		if(ob==null)
+			return new ApiResponse(false,"Patient Not Found !");
+		else	
+			return new ApiResponse(true,"Patient Record",ob);
 	}
 }

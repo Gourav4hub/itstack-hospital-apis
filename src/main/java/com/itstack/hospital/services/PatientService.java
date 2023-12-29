@@ -72,4 +72,13 @@ public class PatientService
 	public List<Patient> listAll() {
 		return patientRepo.findAll();
 	}
+
+	public Patient getByPhone(String phone) 
+	{
+		Optional<Patient> op =  patientRepo.findByPhone(phone);
+		if(op.isPresent())
+			return op.get();
+		else
+			return null;
+	}
 }
