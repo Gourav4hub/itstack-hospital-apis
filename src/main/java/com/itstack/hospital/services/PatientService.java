@@ -6,13 +6,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.itstack.hospital.entities.Appointment;
+import com.itstack.hospital.entities.Doctor;
 import com.itstack.hospital.entities.Patient;
+import com.itstack.hospital.entities.Receptionist;
 import com.itstack.hospital.entities.User;
+import com.itstack.hospital.model.AppointmentModel;
 import com.itstack.hospital.model.PatientRegModel;
+import com.itstack.hospital.repositories.AppointmentRepo;
+import com.itstack.hospital.repositories.DocRepo;
 import com.itstack.hospital.repositories.PatientRepo;
+import com.itstack.hospital.repositories.RecpRepo;
 import com.itstack.hospital.utils.ApiResponse;
 
 import jakarta.transaction.Transactional;
@@ -25,6 +33,7 @@ public class PatientService
 	private PatientRepo patientRepo;
 	@Autowired
 	private UserService userService;
+
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -81,4 +90,6 @@ public class PatientService
 		else
 			return null;
 	}
+
+	
 }

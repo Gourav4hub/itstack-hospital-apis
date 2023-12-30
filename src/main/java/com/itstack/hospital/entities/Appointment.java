@@ -45,6 +45,19 @@ public class Appointment
 	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name = "booked_by")
+	@JoinColumn(name = "booked_by",nullable = true)
 	private Receptionist receptionist;
+
+	public Appointment(Patient patient, Date bookingDate, Date appointmentDate, Doctor doctor, String status,
+			Receptionist receptionist) {
+		super();
+		this.patient = patient;
+		this.bookingDate = bookingDate;
+		this.appointmentDate = appointmentDate;
+		this.doctor = doctor;
+		this.status = status;
+		this.receptionist = receptionist;
+	}
+	
+	
 }
