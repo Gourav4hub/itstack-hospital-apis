@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itstack.hospital.entities.Appointment;
 import com.itstack.hospital.entities.Patient;
+import com.itstack.hospital.entities.Receptionist;
 import com.itstack.hospital.entities.User;
 import com.itstack.hospital.model.AppointmentModel;
 import com.itstack.hospital.model.PatientUpdateModel;
+import com.itstack.hospital.model.UnRegAppointmentModel;
 import com.itstack.hospital.services.PatientService;
 import com.itstack.hospital.services.RecpService;
 import com.itstack.hospital.utils.ApiResponse;
@@ -35,6 +37,8 @@ public class RecpController
 	private PatientService patService;
 	@Autowired
 	private RecpService recpService;
+	@Autowired
+	private PatientService patientService;
 	
 	@GetMapping("/list_patient")
 	public ApiResponse getPatientList() 
@@ -60,6 +64,25 @@ public class RecpController
 		ApiResponse res =  recpService.bookAppointment(model);
 		return res;
 	}
+	
+	@PostMapping("/unreg_appointment")
+	public ApiResponse appointment(@RequestBody UnRegAppointmentModel model) 
+	{
+		Receptionist rec = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(principal!=null) 
+		{
+			final User loginUser = (User)principal;
+			
+			if(loginUser.getRole().equals("ROLE_RECP")) {
+				rec = recpService.findByUser(loginUser).get();
+			}
+		}		
+		ApiResponse res = patientService.unRegAppointment(model,rec);
+		return res;
+	}
+	
+	
 	@GetMapping("/list_appointment")
 	public ApiResponse getAppointmentList() 
 	{

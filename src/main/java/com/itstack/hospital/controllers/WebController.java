@@ -14,6 +14,7 @@ import com.itstack.hospital.entities.User;
 import com.itstack.hospital.model.LoginModel;
 import com.itstack.hospital.model.LoginResponse;
 import com.itstack.hospital.model.PatientRegModel;
+import com.itstack.hospital.model.UnRegAppointmentModel;
 import com.itstack.hospital.services.DocService;
 import com.itstack.hospital.services.PatientService;
 import com.itstack.hospital.services.UserService;
@@ -82,5 +83,12 @@ public class WebController
 	public ApiResponse accessDenied()
 	{
 		return new ApiResponse(false, "Unauthorized Access !","Authorization Failed !");
+	}
+	
+	@PostMapping("/self_appointment")
+	public ApiResponse appointment(@RequestBody UnRegAppointmentModel model) 
+	{
+		ApiResponse res = patientService.unRegAppointment(model,null);
+		return res;
 	}
 }

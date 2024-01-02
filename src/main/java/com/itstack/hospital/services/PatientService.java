@@ -17,6 +17,7 @@ import com.itstack.hospital.entities.Receptionist;
 import com.itstack.hospital.entities.User;
 import com.itstack.hospital.model.AppointmentModel;
 import com.itstack.hospital.model.PatientRegModel;
+import com.itstack.hospital.model.UnRegAppointmentModel;
 import com.itstack.hospital.repositories.AppointmentRepo;
 import com.itstack.hospital.repositories.DocRepo;
 import com.itstack.hospital.repositories.PatientRepo;
@@ -33,6 +34,12 @@ public class PatientService
 	private PatientRepo patientRepo;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DocRepo docRepo;
+	@Autowired
+	private AppointmentRepo appRepo;
+	@Autowired
+	private RecpRepo recRepo;
 
 	
 	@Autowired
@@ -89,6 +96,39 @@ public class PatientService
 			return op.get();
 		else
 			return null;
+	}
+
+	public ApiResponse unRegAppointment(UnRegAppointmentModel model,Receptionist rec) 
+	{
+		try {
+			Patient pat = null;
+			Optional<Patient> patientOP = patientRepo.findByPhone(model.getPhone());
+			
+			if(patientOP.isPresent()) 
+			{
+				pat = patientOP.get();
+			}else {
+				pat = new Patient(model.getName(), model.getPhone());
+				pat = patientRepo.save(pat);
+			}			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date appointmentDate = sdf.parse(model.getAppointmentDate());
+			Date bookingDate = new Date();
+			
+			Optional<Doctor> opD = docRepo.findById(model.getDoctor());
+			if(opD.isPresent())
+			{
+				Appointment app = new Appointment(pat, bookingDate, appointmentDate, opD.get(), "Pending", rec);
+				appRepo.save(app);
+				return new ApiResponse(true, "Appointment Saved !");
+			}else {
+				return new ApiResponse(false, "Appointment Failed !" , "Wrong Doctor !");
+			}
+		}catch(Exception ex) 
+		{
+			return new ApiResponse(false, "Appointment Failed !" , ex.getMessage());
+		}
 	}
 
 	

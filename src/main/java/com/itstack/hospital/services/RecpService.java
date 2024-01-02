@@ -104,4 +104,8 @@ public class RecpService
 			return new ApiResponse(false, "Appointment Failed !" , ex.getMessage());
 		}
 	}
+
+	public Optional<Receptionist> findByUser(User loginUser) {
+		return recpRepo.findByUser(loginUser);
+	}
 }

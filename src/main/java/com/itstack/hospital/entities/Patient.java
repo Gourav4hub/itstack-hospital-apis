@@ -62,6 +62,11 @@ public class Patient
 		this.user = user;
 	}
 	
+	public Patient(String name, String phone) {		
+		this.name = name;
+		this.phone = phone;
+	}
+	
 	public void updateByModel(PatientUpdateModel model) throws ParseException 
 	{
 		if(model.getName()!=null) this.name = model.getName();
